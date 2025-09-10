@@ -2,41 +2,65 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Apollo Tyres Design System - Premium Corporate Theme */
 
 @layer base {
   :root {
+    /* Apollo Brand Colors */
+    --apollo-primary: 278 49% 36%; /* #5C2E91 */
+    --apollo-secondary: 277 53% 32%; /* #56268D */
+    --apollo-accent: 290 100% 85%; /* Light purple accent */
+    
+    /* Base colors */
     --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --foreground: 220 13% 18%;
 
+    /* Card system */
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 13% 18%;
+    --card-hover: 290 50% 98%;
+
+    /* Interactive elements */
+    --primary: 278 49% 36%; /* Apollo Primary */
+    --primary-foreground: 0 0% 100%;
+    --primary-hover: 278 49% 32%;
+
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 220 13% 18%;
+
+    /* Accent colors */
+    --accent: 290 100% 96%;
+    --accent-foreground: 278 49% 36%;
+
+    /* UI elements */
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 46%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 94%;
+    --ring: 278 49% 36%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 13% 18%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --radius: 0.75rem;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    /* Apollo Gradients */
+    --gradient-apollo: linear-gradient(135deg, hsl(var(--apollo-primary)), hsl(var(--apollo-secondary)));
+    --gradient-apollo-light: linear-gradient(135deg, hsl(var(--apollo-accent)), hsl(var(--apollo-primary) / 0.1));
+    --gradient-surface: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted) / 0.3));
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Shadows */
+    --shadow-apollo: 0 10px 30px -10px hsl(var(--apollo-primary) / 0.3);
+    --shadow-card: 0 4px 20px -2px hsl(var(--apollo-primary) / 0.1);
+    --shadow-elevated: 0 20px 40px -10px hsl(var(--apollo-primary) / 0.2);
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
-
-    --radius: 0.5rem;
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 
     --sidebar-background: 0 0% 98%;
 
@@ -100,6 +124,74 @@ All colors MUST be HSL.
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans;
+    background: var(--gradient-surface);
+  }
+}
+
+@layer components {
+  /* Apollo Button Variants */
+  .btn-apollo {
+    @apply bg-gradient-to-r from-primary to-primary/90 text-primary-foreground;
+    @apply hover:from-primary-hover hover:to-primary shadow-apollo;
+    @apply transform transition-all duration-300 hover:scale-105 hover:shadow-elevated;
+    @apply font-semibold px-6 py-3 rounded-xl;
+  }
+
+  .btn-apollo-outline {
+    @apply border-2 border-primary text-primary bg-background;
+    @apply hover:bg-primary hover:text-primary-foreground;
+    @apply transform transition-all duration-300 hover:scale-105;
+    @apply font-semibold px-6 py-3 rounded-xl;
+  }
+
+  /* Apollo Card Variants */
+  .card-apollo {
+    @apply bg-card border border-border rounded-2xl p-6;
+    @apply shadow-card hover:shadow-elevated;
+    @apply transform transition-all duration-300 hover:-translate-y-1;
+    @apply hover:bg-card-hover;
+  }
+
+  .card-apollo-gradient {
+    @apply bg-gradient-to-br from-primary/5 to-accent/30;
+    @apply border border-primary/20 rounded-2xl p-6;
+    @apply shadow-card hover:shadow-elevated;
+    @apply transform transition-all duration-300 hover:-translate-y-1;
+  }
+
+  /* Animation utilities */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  .hover-lift {
+    @apply transform transition-all duration-300 hover:-translate-y-2 hover:shadow-elevated;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
