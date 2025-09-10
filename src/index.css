@@ -133,9 +133,14 @@
   /* Apollo Button Variants */
   .btn-apollo {
     @apply bg-gradient-to-r from-primary to-primary/90 text-primary-foreground;
-    @apply hover:from-primary-hover hover:to-primary shadow-apollo;
-    @apply transform transition-all duration-300 hover:scale-105 hover:shadow-elevated;
+    @apply hover:from-primary-hover hover:to-primary;
+    @apply transform transition-all duration-300 hover:scale-105;
     @apply font-semibold px-6 py-3 rounded-xl;
+    box-shadow: var(--shadow-apollo);
+  }
+
+  .btn-apollo:hover {
+    box-shadow: var(--shadow-elevated);
   }
 
   .btn-apollo-outline {
@@ -148,16 +153,24 @@
   /* Apollo Card Variants */
   .card-apollo {
     @apply bg-card border border-border rounded-2xl p-6;
-    @apply shadow-card hover:shadow-elevated;
     @apply transform transition-all duration-300 hover:-translate-y-1;
     @apply hover:bg-card-hover;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-apollo:hover {
+    box-shadow: var(--shadow-elevated);
   }
 
   .card-apollo-gradient {
     @apply bg-gradient-to-br from-primary/5 to-accent/30;
     @apply border border-primary/20 rounded-2xl p-6;
-    @apply shadow-card hover:shadow-elevated;
     @apply transform transition-all duration-300 hover:-translate-y-1;
+    box-shadow: var(--shadow-card);
+  }
+
+  .card-apollo-gradient:hover {
+    box-shadow: var(--shadow-elevated);
   }
 
   /* Animation utilities */
@@ -170,7 +183,12 @@
   }
 
   .hover-lift {
-    @apply transform transition-all duration-300 hover:-translate-y-2 hover:shadow-elevated;
+    @apply transform transition-all duration-300 hover:-translate-y-2;
+    box-shadow: var(--shadow-card);
+  }
+
+  .hover-lift:hover {
+    box-shadow: var(--shadow-elevated);
   }
 }
 
