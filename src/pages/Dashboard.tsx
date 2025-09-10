@@ -1,12 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Users, FolderOpen, Settings, TrendingUp } from 'lucide-react';
 import ProjectCard from '@/components/ProjectCard';
 import { ApolloCard, ApolloCardContent, ApolloCardHeader, ApolloCardTitle, ApolloCardDescription } from '@/components/ui/apollo-card';
 import { ApolloButton } from '@/components/ui/apollo-button';
+import UserManagement from '@/components/AdminPanel/UserManagement';
+import ProjectManagement from '@/components/AdminPanel/ProjectManagement';
 
 const Dashboard: React.FC = () => {
   const { user, projects } = useAuth();
+  const [activeTab, setActiveTab] = useState<'dashboard' | 'users' | 'projects'>('dashboard');
 
   if (!user) return null;
 
@@ -23,8 +26,70 @@ const Dashboard: React.FC = () => {
     recentActivity: 'Active today',
   };
 
+  // Render admin panel tabs
+  if (isAdmin && (activeTab === 'users' || activeTab === 'projects')) {
+    return (
+      <div className="container mx-auto px-6 py-8 space-y-8">
+        {/* Navigation Tabs */}
+        <div className="flex items-center space-x-1 bg-muted p-1 rounded-lg w-fit">
+          <ApolloButton
+            variant="ghost"
+            size="sm"
+            onClick={() => setActiveTab('dashboard')}
+          >
+            Dashboard
+          </ApolloButton>
+          <ApolloButton
+            variant={activeTab === 'users' ? 'apollo' : 'ghost'}
+            size="sm"
+            onClick={() => setActiveTab('users')}
+          >
+            Users
+          </ApolloButton>
+          <ApolloButton
+            variant={activeTab === 'projects' ? 'apollo' : 'ghost'}
+            size="sm"
+            onClick={() => setActiveTab('projects')}
+          >
+            Projects
+          </ApolloButton>
+        </div>
+
+        {activeTab === 'users' && <UserManagement />}
+        {activeTab === 'projects' && <ProjectManagement />}
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto px-6 py-8 space-y-8">
+      {/* Navigation Tabs for Admins */}
+      {isAdmin && (
+        <div className="flex items-center space-x-1 bg-muted p-1 rounded-lg w-fit">
+          <ApolloButton
+            variant={activeTab === 'dashboard' ? 'apollo' : 'ghost'}
+            size="sm"
+            onClick={() => setActiveTab('dashboard')}
+          >
+            Dashboard
+          </ApolloButton>
+          <ApolloButton
+            variant={activeTab === 'users' ? 'apollo' : 'ghost'}
+            size="sm"
+            onClick={() => setActiveTab('users')}
+          >
+            Users
+          </ApolloButton>
+          <ApolloButton
+            variant={activeTab === 'projects' ? 'apollo' : 'ghost'}
+            size="sm"
+            onClick={() => setActiveTab('projects')}
+          >
+            Projects
+          </ApolloButton>
+        </div>
+      )}
+
       {/* Welcome Section */}
       <div className="animate-fade-in">
         <h1 className="text-4xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent mb-2">
@@ -113,11 +178,11 @@ const Dashboard: React.FC = () => {
           </ApolloCardHeader>
           <ApolloCardContent>
             <div className="flex flex-wrap gap-4">
-              <ApolloButton variant="apollo">
+              <ApolloButton variant="apollo" onClick={() => setActiveTab('users')}>
                 <Users className="h-4 w-4 mr-2" />
                 Manage Users
               </ApolloButton>
-              <ApolloButton variant="apollo-outline">
+              <ApolloButton variant="apollo-outline" onClick={() => setActiveTab('projects')}>
                 <FolderOpen className="h-4 w-4 mr-2" />
                 Manage Projects
               </ApolloButton>
